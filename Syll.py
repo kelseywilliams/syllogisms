@@ -69,13 +69,13 @@ class Syll:
     # Set the weights of the major, middle, and minor terms based on the figure
     def _set_fig(self):
         if(self.fig == 1):
-            self._first_fig()
+            return self._first_fig()
         if(self.fig == 2):
-            self._second_fig()
+            return self._second_fig()
         if(self.fig == 3):
-            self._third_fig()
+            return self._third_fig()
         if(self.fig == 4):
-            self._fourth_fig()
+            return self._fourth_fig()
         else:
             raise Exception("Error in Syll:_set_fig(): Invalid figure.  Please choose a number between 1 and 4")
 
@@ -95,33 +95,10 @@ class Syll:
             return True
         if(rule == 3 and self.p1 >= self.p2):
             return True
-        if(rule == 4 and (self.predicate1 + self.predicate2) <= self.predicate_c + 1):
+        if(rule == 4 and (self.predicate1 + self.predicate2) == self.predicate_c + 1):
             return True
         return False
     
     # Returns the mood of the syllogism as a string
     def return_mood(self):
         return f"{self.premise1_quant}{self.premise2_quant}{self.conc_quant}{self.fig}"
-
-'''
-Creates lists of Syll objects.
-'''
-class Syll_Builder:
-    # Returns a list of Syll objects
-    def return_all_sylls(self):
-        sylls = []
-        for i in range(10):
-            for j in range(10):
-                for k in range(10):
-                    for l in range(4):
-                        syll = Syll(Syll.STATEMENT[i], Syll.STATEMENT[j], Syll.STATEMENT[k], l+1)
-                        sylls.append(syll)
-        return sylls
-
-    # Prints all 4000 possible syllogisms
-    def print_all_sylls(self):
-        for syll in self.return_all_sylls():
-            print(syll.return_mood())
-
-sb = Syll_Builder()
-sb.print_all_sylls()
