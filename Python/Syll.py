@@ -11,8 +11,9 @@ valid()     returns true if the syllogism passes all rules.  Takes no arguments
 check_rule(rule)  returns true if the syllogism passes the rule.  Takes an integer 1 through 4
 return_mood() returns the mood of the syllogism as a string.  Takes no arguments.
 '''
+import CatProp
 class Syll:
-    STATEMENT = ["a","p","t","k","i","e","b","d","g","o"]
+    STATEMENT = CatProp.STATEMENT
     # Set distribution reference constant
     DIST_REF = {"a":(5,1),"p":(4,1),"t":(3,1),"k":(2,1),"i":(1,1),"e":(5,5),"b":(4,5),"d":(3,5),"g":(2,5),"o":(1,5)}
     def __init__(self, premise1_quant, premise2_quant, conc_quant, fig):
