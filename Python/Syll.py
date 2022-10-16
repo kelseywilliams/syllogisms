@@ -1,32 +1,36 @@
 # Kelsey Williams 10-4-2022
 '''
 Creates a valid syllogism from a mood.  For example, AAA1 where a is A is the letter pertaining to
-a statement such as All M are P and 1 is the figure. When creating an instance of Syll, use one of
-the letters listed in the Syll.STATEMENT constant and a number between 1 and 4.
+a statement such as All M are P and 1 is the figure of the syllogism. 
 Example use:
-syll = Syll("a","a","a",1)
+syll = Syll(["a","a","a",1])
+
+@param mood  A list containg three characters that are also elements of CatSchema.STATEMENT 
+and one integer between 1 and 4 corresponding to the syllogisms figure.
 
 Methods:
 valid()     returns true if the syllogism passes all rules.  Takes no arguments
 check_rule(rule)  returns true if the syllogism passes the rule.  Takes an integer 1 through 4
-return_mood() returns the mood of the syllogism as a string.  Takes no arguments.
+return_mood() returns the mood of the syllogism as a list.  Takes no arguments.
 '''
 from CatSchema import CatSchema
 class Syll:
     STATEMENT = CatSchema.STATEMENT
     # Set distribution reference constant
     DIST_REF = {"a":(5,1),"p":(4,1),"t":(3,1),"k":(2,1),"i":(1,1),"e":(5,5),"b":(4,5),"d":(3,5),"g":(2,5),"o":(1,5)}
-    def __init__(self, premise1_statement, premise2_statement, conc_statement, fig):
+    def __init__(self, mood):
         # Unpack object arguments
-        self.premise1_statement = premise1_statement
-        self.premise2_statement = premise2_statement
-        self.conc_statement = conc_statement
+        if len(mood) != 4:
+            raise Exception("Too few elements passed to Syll::constructor().  mood must be a list of length 4.")
+        self.premise1_statement = mood[0]
+        self.premise2_statement = mood[1]
+        self.conc_statement = mood[2]
         self.cs_premise1 = CatSchema(self.premise1_statement)
         self.cs_premise2 = CatSchema(self.premise2_statement)
         self.cs_conc = CatSchema(self.conc_statement)
-        self.fig = fig
+        self.fig = mood[3]
         # Declare a tuple of weights distributed according to the quantity and quality of the statement
-        self.weights = (Syll.DIST_REF[premise1_statement], Syll.DIST_REF[premise2_statement], Syll.DIST_REF[conc_statement])
+        self.weights = (Syll.DIST_REF[self.premise1_statement], Syll.DIST_REF[self.premise2_statement], Syll.DIST_REF[self.conc_statement])
         # Unpack the tuple of weights
         self.major, self.minor, self.conc = self.weights
         # Declare terms and predicate
@@ -119,4 +123,9 @@ class Syll:
         premise1 = self.cs_premise1.construct()
         premise2 = self.cs_premise2.construct()
         conc = self.cs_conc.construct()
-        print(f"{premise1}\n{premise2}\n{conc}")
+        return [premise1,premise2,conc]
+    
+    def print_schema(self):
+        props = self.construct_schema()
+        for prop in props:
+            print(prop)

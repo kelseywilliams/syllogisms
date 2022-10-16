@@ -1,7 +1,8 @@
-from Syll import Syll
 '''
 Creates lists of Syll objects.
 '''
+from Syll import Syll
+from CatSchema import CatSchema
 class SyllBuilder:
     # Returns a list of Syll objects
     def return_all_sylls(self):
@@ -10,7 +11,8 @@ class SyllBuilder:
             for j in range(10):
                 for k in range(10):
                     for l in range(4):
-                        syll = Syll(Syll.STATEMENT[i], Syll.STATEMENT[j], Syll.STATEMENT[k], l+1)
+                        mood = [CatSchema.STATEMENT[i], CatSchema.STATEMENT[j], CatSchema.STATEMENT[k],l+1]
+                        syll = Syll(mood)
                         sylls.append(syll)
         return sylls
     
