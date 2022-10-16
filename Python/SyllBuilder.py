@@ -13,6 +13,15 @@ class SyllBuilder:
                         syll = Syll(Syll.STATEMENT[i], Syll.STATEMENT[j], Syll.STATEMENT[k], l+1)
                         sylls.append(syll)
         return sylls
+    
+    def return_all_valid(self):
+        all_sylls = self.return_all_sylls()
+        valid_sylls = []
+        for syll in all_sylls:
+            if syll.valid():
+                valid_sylls.append(syll)
+        return valid_sylls
+
 
     # Prints all 4000 possible syllogisms
     def print_all_sylls(self):

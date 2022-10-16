@@ -11,19 +11,19 @@ valid()     returns true if the syllogism passes all rules.  Takes no arguments
 check_rule(rule)  returns true if the syllogism passes the rule.  Takes an integer 1 through 4
 return_mood() returns the mood of the syllogism as a string.  Takes no arguments.
 '''
-import CatProp
+from CatProp import CatProp
 class Syll:
     STATEMENT = CatProp.STATEMENT
     # Set distribution reference constant
     DIST_REF = {"a":(5,1),"p":(4,1),"t":(3,1),"k":(2,1),"i":(1,1),"e":(5,5),"b":(4,5),"d":(3,5),"g":(2,5),"o":(1,5)}
-    def __init__(self, premise1_quant, premise2_quant, conc_quant, fig):
+    def __init__(self, premise1_statement, premise2_statement, conc_statement, fig):
         # Unpack object arguments
-        self.premise1_quant = premise1_quant
-        self.premise2_quant = premise2_quant
-        self.conc_quant = conc_quant
+        self.premise1_statement = premise1_statement
+        self.premise2_statement = premise2_statement
+        self.conc_statement = conc_statement
         self.fig = fig
         # Declare a tuple of weights distributed according to the quantity and quality of the statement
-        self.weights = (Syll.DIST_REF[premise1_quant], Syll.DIST_REF[premise2_quant], Syll.DIST_REF[conc_quant])
+        self.weights = (Syll.DIST_REF[premise1_statement], Syll.DIST_REF[premise2_statement], Syll.DIST_REF[conc_statement])
         # Unpack the tuple of weights
         self.major, self.minor, self.conc = self.weights
         # Declare terms and predicate
@@ -102,4 +102,7 @@ class Syll:
     
     # Returns the mood of the syllogism as a string
     def return_mood(self):
-        return f"{self.premise1_quant}{self.premise2_quant}{self.conc_quant}{self.fig}"
+        return f"{self.premise1_statement}{self.premise2_statement}{self.conc_statement}{self.fig}"
+    
+    def construct_schema(self):
+        premiss1 = CatProp(self.premise1_statement)
