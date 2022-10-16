@@ -11,9 +11,9 @@ valid()     returns true if the syllogism passes all rules.  Takes no arguments
 check_rule(rule)  returns true if the syllogism passes the rule.  Takes an integer 1 through 4
 return_mood() returns the mood of the syllogism as a string.  Takes no arguments.
 '''
-from CatProp import CatProp
+from CatSchema import CatSchema
 class Syll:
-    STATEMENT = CatProp.STATEMENT
+    STATEMENT = CatSchema.STATEMENT
     # Set distribution reference constant
     DIST_REF = {"a":(5,1),"p":(4,1),"t":(3,1),"k":(2,1),"i":(1,1),"e":(5,5),"b":(4,5),"d":(3,5),"g":(2,5),"o":(1,5)}
     def __init__(self, premise1_statement, premise2_statement, conc_statement, fig):
@@ -105,4 +105,7 @@ class Syll:
         return f"{self.premise1_statement}{self.premise2_statement}{self.conc_statement}{self.fig}"
     
     def construct_schema(self):
-        premiss1 = CatProp(self.premise1_statement)
+        premise1 = CatSchema(self.premise1_statement)
+        premise2 = CatSchema(self.premise2_statement)
+        conc = CatSchema(self.conc_statement)
+        print(f"{premise1}\n{premise2}\n{conc}")

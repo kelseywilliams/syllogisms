@@ -1,18 +1,18 @@
-class CatProp:
+class CatSchema:
     STATEMENT = ["a","p","t","k","i","e","b","d","g","o"]
     def __init__(self, statement, s="S", p="P"):
-        if statement not in CatProp.STATEMENT:
+        if statement not in CatSchema.STATEMENT:
             raise Exception("Invalid statment given")
         self.statement = statement
         self.s = s
         self.p = p
         
     def obversion(self):
-        index = CatProp.STATEMENT.index(self.statement)
+        index = CatSchema.STATEMENT.index(self.statement)
         if index >= 5:
-            self.statement = CatProp.STATEMENT[0:4][index - 5]
+            self.statement = CatSchema.STATEMENT[0:4][index - 5]
         else:
-            self.statement = CatProp.STATEMENT[5:10][index]
+            self.statement = CatSchema.STATEMENT[5:10][index]
         self.compliment(1)
     
     def compliment(self, term):
