@@ -21,6 +21,9 @@ class Syll:
         self.premise1_statement = premise1_statement
         self.premise2_statement = premise2_statement
         self.conc_statement = conc_statement
+        self.cs_premise1 = CatSchema(self.premise1_statement)
+        self.cs_premise2 = CatSchema(self.premise2_statement)
+        self.cs_conc = CatSchema(self.conc_statement)
         self.fig = fig
         # Declare a tuple of weights distributed according to the quantity and quality of the statement
         self.weights = (Syll.DIST_REF[premise1_statement], Syll.DIST_REF[premise2_statement], Syll.DIST_REF[conc_statement])
@@ -33,7 +36,9 @@ class Syll:
 
     def _first_fig(self):
         self.m1, self.p1 = self.major
+        self.cs_premise1.update_terms("M","P")
         self.s1, self.m2 = self.minor
+        self.cs_premise2.update_terms("S","M")
         self.s2, self.p2 = self.conc
 
         self.predicate1 = self.p1
@@ -42,7 +47,9 @@ class Syll:
 
     def _second_fig(self):
         self.p1, self.m1 = self.major
+        self.cs_premise1.update_terms("P","M")
         self.s1, self.m2 = self.minor
+        self.cs_premise2.update_terms("S","M")
         self.s2, self.p2 = self.conc
 
         self.predicate1 = self.m1
@@ -51,7 +58,9 @@ class Syll:
     
     def _third_fig(self):
         self.m1, self.p1 = self.major
+        self.cs_premise1.update_terms("M","P")
         self.m2, self.s1 = self.minor
+        self.cs_premise2.update_terms("M","S")
         self.s2, self.p2 = self.conc
 
         self.predicate1 = self.p1
@@ -60,7 +69,9 @@ class Syll:
 
     def _fourth_fig(self):
         self.p1, self.m1 = self.major
+        self.cs_premise1.update_terms("P","M")
         self.m2, self.s1 = self.minor
+        self.cs_premise2.update_terms("M","S")
         self.s2, self.p2 = self.conc
 
         self.predicate1 = self.m1
@@ -102,10 +113,10 @@ class Syll:
     
     # Returns the mood of the syllogism as a string
     def return_mood(self):
-        return f"{self.premise1_statement}{self.premise2_statement}{self.conc_statement}{self.fig}"
+        return [self.premise1_statement, self.premise2_statement, self.conc_statement, self.fig]
     
     def construct_schema(self):
-        premise1 = CatSchema(self.premise1_statement)
-        premise2 = CatSchema(self.premise2_statement)
-        conc = CatSchema(self.conc_statement)
+        premise1 = self.cs_premise1.construct()
+        premise2 = self.cs_premise2.construct()
+        conc = self.cs_conc.construct()
         print(f"{premise1}\n{premise2}\n{conc}")

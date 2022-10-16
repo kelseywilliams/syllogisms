@@ -21,6 +21,10 @@ class CatSchema:
         else:
             self.s = "non-" + self.s
     
+    def update_terms(self,s,p):
+        self.s = s
+        self.p = p
+        
     def construct(self):
         categorical_propositions = {"a": f"All {self.s} are {self.p}.","p": f"Almost all {self.s} are {self.p}.","t": f"Most {self.s} are {self.p}.","k": f"Many {self.s} are {self.p}.","i": f"Some {self.s} are {self.p}.","e": f"No {self.s} are {self.p}.","b": f"Few {self.s} are {self.p}.","d": f"Most {self.s} are not {self.p}.","g": f"Many {self.s} are not {self.p}.","o": f"Some {self.s} are not {self.p}."}
-        print(categorical_propositions[self.statement])
+        return categorical_propositions[self.statement]
